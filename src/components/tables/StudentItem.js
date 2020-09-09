@@ -1,6 +1,6 @@
+// IT18233704 -  N.R Yamasinghe
 import React from "react";
 import Button from "react-bootstrap/Button";
-import Moment from "react-moment";
 import { Link } from "react-router-dom";
 import EditButton from "./../common/EditButton";
 import DeleteButton from "./../common/DeleteButton";
@@ -11,10 +11,8 @@ const StudentItem = ({
     academicYearAndSemester,
     programme,
     mainGroup,
-    mainGroupID,
     subGroup,
     subGroupID,
-    createdDate,
   },
   deleteStudent,
   filterStudent,

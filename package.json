@@ -22,6 +22,8 @@
   },
   "dependencies": {
     "bootstrap": "^4.5.2",
+    "electron-alert": "^0.1.11",
+    "is-online": "^8.4.0",
     "moment": "^2.27.0",
     "mongoose": "^5.9.28",
     "react": "^16.13.1",

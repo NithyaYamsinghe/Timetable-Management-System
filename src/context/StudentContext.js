@@ -36,7 +36,17 @@ class StudentProvider extends Component {
       "academicYearAndSemesters:update",
       academicYearAndSemester
     );
-    this.showAlert("year & semster updated");
+
+    const condition = navigator.onLine;
+    if (condition) {
+      this.showAlert("year & semster updated");
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No internet connection!",
+      });
+    }
   };
 
   // update programme
@@ -47,7 +57,17 @@ class StudentProvider extends Component {
     }
 
     ipcRenderer.send("programmes:update", programmeItem);
-    this.showAlert("programme updated");
+
+    const condition = navigator.onLine;
+    if (condition) {
+      this.showAlert("programme updated");
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No internet connection!",
+      });
+    }
   };
 
   // update group
@@ -58,7 +78,17 @@ class StudentProvider extends Component {
     }
 
     ipcRenderer.send("groups:update", groupItem);
-    this.showAlert("group updated");
+
+    const condition = navigator.onLine;
+    if (condition) {
+      this.showAlert("group updated");
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No internet connection!",
+      });
+    }
   };
 
   // update sub group
@@ -69,7 +99,16 @@ class StudentProvider extends Component {
     }
 
     ipcRenderer.send("subGroups:update", subGroupItem);
-    this.showAlert("sub group updated");
+    const condition = navigator.onLine;
+    if (condition) {
+      this.showAlert("sub group updated");
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No internet connection!",
+      });
+    }
   };
 
   // update tag
@@ -80,7 +119,17 @@ class StudentProvider extends Component {
     }
 
     ipcRenderer.send("tags:update", TagItem);
-    this.showAlert("tag updated");
+
+    const condition = navigator.onLine;
+    if (condition) {
+      this.showAlert("tag updated");
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No internet connection!",
+      });
+    }
   };
 
   // update student
@@ -96,7 +145,17 @@ class StudentProvider extends Component {
     }
 
     ipcRenderer.send("students:update", studentItem);
-    this.showAlert("student updated");
+
+    const condition = navigator.onLine;
+    if (condition) {
+      this.showAlert("student updated");
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No internet connection!",
+      });
+    }
   };
 
   // filter academic year and semester
@@ -193,14 +252,24 @@ class StudentProvider extends Component {
       }).then((result) => {
         if (result.value) {
           ipcRenderer.send("academicYearAndSemesters:delete", _id);
-          this.showAlert("year & semester removed");
-          Swal.fire({
-            icon: "success",
-            title: "Deleted!",
-            text: "year & semester has been deleted",
-            showConfirmButton: true,
-            timer: 1500,
-          }).then(function () {});
+
+          const condition = navigator.onLine;
+          if (condition) {
+            this.showAlert("year & semester removed");
+            Swal.fire({
+              icon: "success",
+              title: "Deleted!",
+              text: "year & semester has been deleted",
+              showConfirmButton: true,
+              timer: 1500,
+            }).then(function () {});
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "No internet connection!",
+            });
+          }
         }
       });
     } catch (error) {}
@@ -220,14 +289,24 @@ class StudentProvider extends Component {
       }).then((result) => {
         if (result.value) {
           ipcRenderer.send("programmes:delete", _id);
-          this.showAlert("programme removed");
-          Swal.fire({
-            icon: "success",
-            title: "Deleted!",
-            text: "programme has been deleted",
-            showConfirmButton: true,
-            timer: 1500,
-          }).then(function () {});
+
+          const condition = navigator.onLine;
+          if (condition) {
+            this.showAlert("programme removed");
+            Swal.fire({
+              icon: "success",
+              title: "Deleted!",
+              text: "programme has been deleted",
+              showConfirmButton: true,
+              timer: 1500,
+            }).then(function () {});
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "No internet connection!",
+            });
+          }
         }
       });
     } catch (error) {}
@@ -247,14 +326,24 @@ class StudentProvider extends Component {
       }).then((result) => {
         if (result.value) {
           ipcRenderer.send("groups:delete", _id);
-          this.showAlert("group removed");
-          Swal.fire({
-            icon: "success",
-            title: "Deleted!",
-            text: "group has been deleted",
-            showConfirmButton: true,
-            timer: 1500,
-          }).then(function () {});
+
+          const condition = navigator.onLine;
+          if (condition) {
+            this.showAlert("group removed");
+            Swal.fire({
+              icon: "success",
+              title: "Deleted!",
+              text: "group has been deleted",
+              showConfirmButton: true,
+              timer: 1500,
+            }).then(function () {});
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "No internet connection!",
+            });
+          }
         }
       });
     } catch (error) {}
@@ -274,14 +363,23 @@ class StudentProvider extends Component {
       }).then((result) => {
         if (result.value) {
           ipcRenderer.send("subGroups:delete", _id);
-          this.showAlert("sub group removed");
-          Swal.fire({
-            icon: "success",
-            title: "Deleted!",
-            text: "sub group has been deleted",
-            showConfirmButton: true,
-            timer: 1500,
-          }).then(function () {});
+          const condition = navigator.onLine;
+          if (condition) {
+            this.showAlert("sub group removed");
+            Swal.fire({
+              icon: "success",
+              title: "Deleted!",
+              text: "sub group has been deleted",
+              showConfirmButton: true,
+              timer: 1500,
+            }).then(function () {});
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "No internet connection!",
+            });
+          }
         }
       });
     } catch (error) {}
@@ -301,14 +399,23 @@ class StudentProvider extends Component {
       }).then((result) => {
         if (result.value) {
           ipcRenderer.send("tags:delete", _id);
-          this.showAlert("tag removed");
-          Swal.fire({
-            icon: "success",
-            title: "Deleted!",
-            text: "tag has been deleted",
-            showConfirmButton: true,
-            timer: 1500,
-          }).then(function () {});
+          const condition = navigator.onLine;
+          if (condition) {
+            this.showAlert("tag removed");
+            Swal.fire({
+              icon: "success",
+              title: "Deleted!",
+              text: "tag has been deleted",
+              showConfirmButton: true,
+              timer: 1500,
+            }).then(function () {});
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "No internet connection!",
+            });
+          }
         }
       });
     } catch (error) {}
@@ -328,14 +435,24 @@ class StudentProvider extends Component {
       }).then((result) => {
         if (result.value) {
           ipcRenderer.send("students:delete", _id);
-          this.showAlert("student removed");
-          Swal.fire({
-            icon: "success",
-            title: "Deleted!",
-            text: "student has been deleted",
-            showConfirmButton: true,
-            timer: 1500,
-          }).then(function () {});
+          const condition = navigator.onLine;
+          if (condition) {
+            this.showAlert("student removed");
+
+            Swal.fire({
+              icon: "success",
+              title: "Deleted!",
+              text: "student has been deleted",
+              showConfirmButton: true,
+              timer: 1500,
+            }).then(function () {});
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "No internet connection!",
+            });
+          }
         }
       });
     } catch (error) {}
@@ -351,7 +468,16 @@ class StudentProvider extends Component {
     }
 
     ipcRenderer.send("academicYearAndSemesters:add", academicYearAndSemester);
-    this.showAlert("year & semster added");
+    const condition = navigator.onLine;
+    if (condition) {
+      this.showAlert("year & semster added");
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No internet connection!",
+      });
+    }
   };
 
   // add programme
@@ -362,7 +488,17 @@ class StudentProvider extends Component {
     }
 
     ipcRenderer.send("programmes:add", programme);
-    this.showAlert("program added");
+
+    const condition = navigator.onLine;
+    if (condition) {
+      this.showAlert("program added");
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No internet connection!",
+      });
+    }
   };
 
   // add group
@@ -373,7 +509,17 @@ class StudentProvider extends Component {
     }
 
     ipcRenderer.send("groups:add", group);
-    this.showAlert("group added");
+
+    const condition = navigator.onLine;
+    if (condition) {
+      this.showAlert("group added");
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No internet connection!",
+      });
+    }
   };
 
   // add sub group
@@ -384,7 +530,17 @@ class StudentProvider extends Component {
     }
 
     ipcRenderer.send("subGroups:add", subGroup);
-    this.showAlert("sub group added");
+
+    const condition = navigator.onLine;
+    if (condition) {
+      this.showAlert("sub group added");
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No internet connection!",
+      });
+    }
   };
 
   // add tag
@@ -395,7 +551,17 @@ class StudentProvider extends Component {
     }
 
     ipcRenderer.send("tags:add", tag);
-    this.showAlert("tag added");
+
+    const condition = navigator.onLine;
+    if (condition) {
+      this.showAlert("tag added");
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No internet connection!",
+      });
+    }
   };
 
   // add student
@@ -411,7 +577,17 @@ class StudentProvider extends Component {
     }
 
     ipcRenderer.send("students:add", student);
-    this.showAlert("student added");
+
+    const condition = navigator.onLine;
+    if (condition) {
+      this.showAlert("student added");
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No internet connection!",
+      });
+    }
   };
 
   // show alert

@@ -8,6 +8,30 @@ const SubGroup = require("./models/SubGroup");
 const Tag = require("./models/Tag");
 const Student = require("./models/Student");
 const connectDB = require("./config/db");
+const isOnline = require("is-online");
+const Alert = require("electron-alert");
+
+let alert = new Alert();
+
+let swalOptionsNotConnected = {
+  type: "error",
+  title: "Oops...",
+  text: "No internet connection!",
+};
+let swalOptionsConnected = {
+  type: "success",
+  title: "Connected",
+  text: "Connected to the internet!",
+};
+
+(async () => {
+  const response = await isOnline();
+  if (!response) {
+    alert.fireFrameless(swalOptionsNotConnected, null, true, false);
+  } else {
+    alert.fireFrameless(swalOptionsConnected, null, true, false);
+  }
+})();
 
 // database connection
 connectDB();

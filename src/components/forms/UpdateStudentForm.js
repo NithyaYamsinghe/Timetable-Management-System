@@ -1,3 +1,4 @@
+// IT18233704 -  N.R Yamasinghe
 import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
@@ -143,13 +144,6 @@ const UpdateStudentForm = ({
                       }
                     />
                   </Col>
-                  {/* <Col>
-                    <Form.Control
-                      hidden
-                      value={filteredStudent[0]._id}
-                      onChange={(e) => set_id(e.target.value)}
-                    />
-                  </Col> */}
                 </Row>
                 <Row className="my-3">
                   <Col>
