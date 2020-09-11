@@ -6,11 +6,17 @@ const StudentContext = React.createContext();
 class StudentProvider extends Component {
   state = {
     academicYearAndSemesters: [],
+    sortedAcademicYearAndSemesters: [],
     programmes: [],
+    sortedProgrammes: [],
     groups: [],
+    sortedGroups: [],
     subGroups: [],
+    sortedSubGroups: [],
     tags: [],
+    sortedTags: [],
     students: [],
+    sortedStudents: [],
     filteredacademicYearAndSemester: {},
     filteredProgramme: {},
     filteredGroup: {},
@@ -20,6 +26,7 @@ class StudentProvider extends Component {
     show: false,
     message: "",
     variant: "success",
+    search: "",
   };
 
   // update academic year and semester
@@ -608,6 +615,9 @@ class StudentProvider extends Component {
         (e, academicYearAndSemesters) => {
           this.setState({
             academicYearAndSemesters: JSON.parse(academicYearAndSemesters),
+            sortedAcademicYearAndSemesters: JSON.parse(
+              academicYearAndSemesters
+            ),
           });
         }
       );
@@ -621,6 +631,7 @@ class StudentProvider extends Component {
       ipcRenderer.on("programmes:get", (e, programmes) => {
         this.setState({
           programmes: JSON.parse(programmes),
+          sortedProgrammes: JSON.parse(programmes),
         });
       });
     } catch (ex) {}
@@ -633,6 +644,7 @@ class StudentProvider extends Component {
       ipcRenderer.on("groups:get", (e, groups) => {
         this.setState({
           groups: JSON.parse(groups),
+          sortedGroups: JSON.parse(groups),
         });
       });
     } catch (ex) {}
@@ -645,6 +657,7 @@ class StudentProvider extends Component {
       ipcRenderer.on("subGroups:get", (e, subGroups) => {
         this.setState({
           subGroups: JSON.parse(subGroups),
+          sortedSubGroups: JSON.parse(subGroups),
         });
       });
     } catch (ex) {}
@@ -657,6 +670,7 @@ class StudentProvider extends Component {
       ipcRenderer.on("tags:get", (e, tags) => {
         this.setState({
           tags: JSON.parse(tags),
+          sortedTags: JSON.parse(tags),
         });
       });
     } catch (ex) {}
@@ -669,10 +683,259 @@ class StudentProvider extends Component {
       ipcRenderer.on("students:get", (e, students) => {
         this.setState({
           students: JSON.parse(students),
+          sortedStudents: JSON.parse(students),
         });
       });
     } catch (ex) {}
   }
+
+  // handle  academic year and semesters change
+  handleAcademicYearAndSemestersChange = (event) => {
+    const name = event.target.name;
+
+    const value =
+      event.target.type === "checkbox"
+        ? event.target.checked
+        : event.target.value;
+    this.setState(
+      {
+        [name]: value,
+      },
+
+      this.sortAcademicYearAndSemestersData
+    );
+  };
+
+  sortAcademicYearAndSemestersData = () => {
+    const { academicYearAndSemesters, search } = this.state;
+    let tempAcademicYearAndSemesters = [...academicYearAndSemesters];
+
+    if (search.length > 0) {
+      tempAcademicYearAndSemesters = tempAcademicYearAndSemesters.filter(
+        (item) => {
+          let tempSearch = search.toLowerCase();
+          let tempacademicYearAndSemester1 = item.yearAndSemester
+            .toLowerCase()
+            .slice(0, search.length);
+          let tempacademicYearAndSemester2 = item.year
+            .toLowerCase()
+            .slice(0, search.length);
+          let tempacademicYearAndSemester3 = item.semester
+            .toLowerCase()
+            .slice(0, search.length);
+          if (tempSearch === tempacademicYearAndSemester1) {
+            return item;
+          }
+          if (tempSearch === tempacademicYearAndSemester2) {
+            return item;
+          }
+          if (tempSearch === tempacademicYearAndSemester3) {
+            return item;
+          }
+          return null;
+        }
+      );
+    }
+    this.setState({
+      sortedAcademicYearAndSemesters: tempAcademicYearAndSemesters,
+    });
+  };
+
+  // handle programme change
+  handleProgrammeChange = (event) => {
+    const name = event.target.name;
+
+    const value =
+      event.target.type === "checkbox"
+        ? event.target.checked
+        : event.target.value;
+    this.setState(
+      {
+        [name]: value,
+      },
+
+      this.sortProgrammeData
+    );
+  };
+
+  sortProgrammeData = () => {
+    const { programmes, search } = this.state;
+    let tempProgrammes = [...programmes];
+
+    if (search.length > 0) {
+      tempProgrammes = tempProgrammes.filter((item) => {
+        let tempSearch = search.toLowerCase();
+        let tempProgramme = item.programme
+          .toLowerCase()
+          .slice(0, search.length);
+        if (tempSearch === tempProgramme) {
+          return item;
+        }
+        return null;
+      });
+    }
+    this.setState({
+      sortedProgrammes: tempProgrammes,
+    });
+  };
+
+  // handle group change
+  handleGroupChange = (event) => {
+    const name = event.target.name;
+
+    const value =
+      event.target.type === "checkbox"
+        ? event.target.checked
+        : event.target.value;
+    this.setState(
+      {
+        [name]: value,
+      },
+
+      this.sortGroupData
+    );
+  };
+
+  sortGroupData = () => {
+    const { groups, search } = this.state;
+    let tempGroups = [...groups];
+
+    if (search.length > 0) {
+      tempGroups = tempGroups.filter((item) => {
+        let tempSearch = search.toLowerCase();
+        let tempGroup = item.group.toLowerCase().slice(0, search.length);
+        if (tempSearch === tempGroup) {
+          return item;
+        }
+        return null;
+      });
+    }
+    this.setState({
+      sortedGroups: tempGroups,
+    });
+  };
+
+  // handle sub group change
+  handleSubGroupChange = (event) => {
+    const name = event.target.name;
+
+    const value =
+      event.target.type === "checkbox"
+        ? event.target.checked
+        : event.target.value;
+    this.setState(
+      {
+        [name]: value,
+      },
+
+      this.sortSubGroupData
+    );
+  };
+
+  sortSubGroupData = () => {
+    const { subGroups, search } = this.state;
+    let tempSubGroups = [...subGroups];
+
+    if (search.length > 0) {
+      tempSubGroups = tempSubGroups.filter((item) => {
+        let tempSearch = search.toLowerCase();
+        let tempSubGroup = item.subGroup.toLowerCase().slice(0, search.length);
+        if (tempSearch === tempSubGroup) {
+          return item;
+        }
+        return null;
+      });
+    }
+    this.setState({
+      sortedSubGroups: tempSubGroups,
+    });
+  };
+
+  // handle tag change
+  handleTagChange = (event) => {
+    const name = event.target.name;
+
+    const value =
+      event.target.type === "checkbox"
+        ? event.target.checked
+        : event.target.value;
+    this.setState(
+      {
+        [name]: value,
+      },
+
+      this.sortTagData
+    );
+  };
+
+  sortTagData = () => {
+    const { tags, search } = this.state;
+    let tempTags = [...tags];
+
+    if (search.length > 0) {
+      tempTags = tempTags.filter((item) => {
+        let tempSearch = search.toLowerCase();
+        let tempTag = item.tag.toLowerCase().slice(0, search.length);
+        if (tempSearch === tempTag) {
+          return item;
+        }
+        return null;
+      });
+    }
+    this.setState({
+      sortedTags: tempTags,
+    });
+  };
+
+  // handle student change
+  handleStudentChange = (event) => {
+    const name = event.target.name;
+
+    const value =
+      event.target.type === "checkbox"
+        ? event.target.checked
+        : event.target.value;
+    this.setState(
+      {
+        [name]: value,
+      },
+
+      this.sortStudentData
+    );
+  };
+
+  sortStudentData = () => {
+    const { students, search } = this.state;
+    let tempStudents = [...students];
+
+    if (search.length > 0) {
+      tempStudents = tempStudents.filter((item) => {
+        let tempSearch = search.toLowerCase();
+        let tempStudent1 = item.programme.toLowerCase().slice(0, search.length);
+        let tempStudent2 = item.mainGroup.toLowerCase().slice(0, search.length);
+        let tempStudent3 = item.subGroup.toLowerCase().slice(0, search.length);
+        let tempStudent4 = item.academicYearAndSemester
+          .toLowerCase()
+          .slice(0, search.length);
+        if (tempSearch === tempStudent1) {
+          return item;
+        }
+        if (tempSearch === tempStudent2) {
+          return item;
+        }
+        if (tempSearch === tempStudent3) {
+          return item;
+        }
+        if (tempSearch === tempStudent4) {
+          return item;
+        }
+        return null;
+      });
+    }
+    this.setState({
+      sortedStudents: tempStudents,
+    });
+  };
 
   componentDidMount = () => {
     this.populateAcademicYearAndSemesters();
@@ -682,32 +945,35 @@ class StudentProvider extends Component {
     this.populateTags();
     this.populateStudents();
     ipcRenderer.on("students:clear", () => {
-      this.setState({ students: [] });
+      this.setState({ students: [], sortedStudents: [] });
       this.showAlert("students cleared");
     });
 
     ipcRenderer.on("academicYearAndSemesters:clear", () => {
-      this.setState({ academicYearAndSemesters: [] });
+      this.setState({
+        academicYearAndSemesters: [],
+        sortedAcademicYearAndSemesters: [],
+      });
       this.showAlert("academic year & semesters cleared");
     });
 
     ipcRenderer.on("programmes:clear", () => {
-      this.setState({ programmes: [] });
+      this.setState({ programmes: [], sortedProgrammes: [] });
       this.showAlert("programmes cleared");
     });
 
     ipcRenderer.on("groups:clear", () => {
-      this.setState({ groups: [] });
+      this.setState({ groups: [], sortedGroups: [] });
       this.showAlert("groups cleared");
     });
 
     ipcRenderer.on("subGroups:clear", () => {
-      this.setState({ subGroups: [] });
+      this.setState({ subGroups: [], sortedSubGroups: [] });
       this.showAlert("sub groups cleared");
     });
 
     ipcRenderer.on("tags:clear", () => {
-      this.setState({ tags: [] });
+      this.setState({ tags: [], sortedTags: [] });
       this.showAlert("tags cleared");
     });
   };
@@ -741,6 +1007,13 @@ class StudentProvider extends Component {
           deleteStudent: this.deleteStudent,
           filterStudent: this.filterStudent,
           updateStudent: this.updateStudent,
+          handleAcademicYearAndSemestersChange: this
+            .handleAcademicYearAndSemestersChange,
+          handleProgrammeChange: this.handleProgrammeChange,
+          handleGroupChange: this.handleGroupChange,
+          handleSubGroupChange: this.handleSubGroupChange,
+          handleTagChange: this.handleTagChange,
+          handleStudentChange: this.handleStudentChange,
         }}
       >
         {this.props.children}
