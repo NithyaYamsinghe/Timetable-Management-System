@@ -39,20 +39,27 @@ class StudentProvider extends Component {
       return false;
     }
 
-    ipcRenderer.send(
-      "academicYearAndSemesters:update",
-      academicYearAndSemester
-    );
-
-    const condition = navigator.onLine;
-    if (condition) {
-      this.showAlert("year & semster updated");
-    } else {
+    if (this.filteringAcademicYearAndSemester(academicYearAndSemester)) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No internet connection!",
+        icon: "warning",
+        title: "Warning",
+        text: "Already added data",
       });
+    } else {
+      const condition = navigator.onLine;
+      if (condition) {
+        ipcRenderer.send(
+          "academicYearAndSemesters:update",
+          academicYearAndSemester
+        );
+        this.showAlert("year & semster updated");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No internet connection!",
+        });
+      }
     }
   };
 
@@ -63,17 +70,24 @@ class StudentProvider extends Component {
       return false;
     }
 
-    ipcRenderer.send("programmes:update", programmeItem);
-
-    const condition = navigator.onLine;
-    if (condition) {
-      this.showAlert("programme updated");
-    } else {
+    if (this.filteringProgramme(programmeItem.programme)) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No internet connection!",
+        icon: "warning",
+        title: "Warning",
+        text: "Already added data",
       });
+    } else {
+      const condition = navigator.onLine;
+      if (condition) {
+        ipcRenderer.send("programmes:update", programmeItem);
+        this.showAlert("programme updated");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No internet connection!",
+        });
+      }
     }
   };
 
@@ -84,17 +98,24 @@ class StudentProvider extends Component {
       return false;
     }
 
-    ipcRenderer.send("groups:update", groupItem);
-
-    const condition = navigator.onLine;
-    if (condition) {
-      this.showAlert("group updated");
-    } else {
+    if (this.filteringGroup(groupItem.group)) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No internet connection!",
+        icon: "warning",
+        title: "Warning",
+        text: "Already added data",
       });
+    } else {
+      const condition = navigator.onLine;
+      if (condition) {
+        ipcRenderer.send("groups:update", groupItem);
+        this.showAlert("group updated");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No internet connection!",
+        });
+      }
     }
   };
 
@@ -104,17 +125,24 @@ class StudentProvider extends Component {
       this.showAlert("please enter all fields", "danger");
       return false;
     }
-
-    ipcRenderer.send("subGroups:update", subGroupItem);
-    const condition = navigator.onLine;
-    if (condition) {
-      this.showAlert("sub group updated");
-    } else {
+    if (this.filteringSubGroup(subGroupItem.subGroup)) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No internet connection!",
+        icon: "warning",
+        title: "Warning",
+        text: "Already added data",
       });
+    } else {
+      const condition = navigator.onLine;
+      if (condition) {
+        ipcRenderer.send("subGroups:update", subGroupItem);
+        this.showAlert("sub group updated");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No internet connection!",
+        });
+      }
     }
   };
 
@@ -125,17 +153,24 @@ class StudentProvider extends Component {
       return false;
     }
 
-    ipcRenderer.send("tags:update", TagItem);
-
-    const condition = navigator.onLine;
-    if (condition) {
-      this.showAlert("tag updated");
-    } else {
+    if (this.filteringTag(TagItem.tag)) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No internet connection!",
+        icon: "warning",
+        title: "Warning",
+        text: "Already added data",
       });
+    } else {
+      const condition = navigator.onLine;
+      if (condition) {
+        ipcRenderer.send("tags:update", TagItem);
+        this.showAlert("tag updated");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No internet connection!",
+        });
+      }
     }
   };
 
@@ -151,17 +186,24 @@ class StudentProvider extends Component {
       return false;
     }
 
-    ipcRenderer.send("students:update", studentItem);
-
-    const condition = navigator.onLine;
-    if (condition) {
-      this.showAlert("student updated");
-    } else {
+    if (this.filteringStudent(studentItem)) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No internet connection!",
+        icon: "warning",
+        title: "Warning",
+        text: "Already added data",
       });
+    } else {
+      const condition = navigator.onLine;
+      if (condition) {
+        ipcRenderer.send("students:update", studentItem);
+        this.showAlert("student updated");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No internet connection!",
+        });
+      }
     }
   };
 
@@ -258,10 +300,9 @@ class StudentProvider extends Component {
         confirmButtonText: "Delete",
       }).then((result) => {
         if (result.value) {
-          ipcRenderer.send("academicYearAndSemesters:delete", _id);
-
           const condition = navigator.onLine;
           if (condition) {
+            ipcRenderer.send("academicYearAndSemesters:delete", _id);
             this.showAlert("year & semester removed");
             Swal.fire({
               icon: "success",
@@ -295,10 +336,9 @@ class StudentProvider extends Component {
         confirmButtonText: "Delete",
       }).then((result) => {
         if (result.value) {
-          ipcRenderer.send("programmes:delete", _id);
-
           const condition = navigator.onLine;
           if (condition) {
+            ipcRenderer.send("programmes:delete", _id);
             this.showAlert("programme removed");
             Swal.fire({
               icon: "success",
@@ -332,10 +372,9 @@ class StudentProvider extends Component {
         confirmButtonText: "Delete",
       }).then((result) => {
         if (result.value) {
-          ipcRenderer.send("groups:delete", _id);
-
           const condition = navigator.onLine;
           if (condition) {
+            ipcRenderer.send("groups:delete", _id);
             this.showAlert("group removed");
             Swal.fire({
               icon: "success",
@@ -369,9 +408,9 @@ class StudentProvider extends Component {
         confirmButtonText: "Delete",
       }).then((result) => {
         if (result.value) {
-          ipcRenderer.send("subGroups:delete", _id);
           const condition = navigator.onLine;
           if (condition) {
+            ipcRenderer.send("subGroups:delete", _id);
             this.showAlert("sub group removed");
             Swal.fire({
               icon: "success",
@@ -405,9 +444,9 @@ class StudentProvider extends Component {
         confirmButtonText: "Delete",
       }).then((result) => {
         if (result.value) {
-          ipcRenderer.send("tags:delete", _id);
           const condition = navigator.onLine;
           if (condition) {
+            ipcRenderer.send("tags:delete", _id);
             this.showAlert("tag removed");
             Swal.fire({
               icon: "success",
@@ -441,9 +480,9 @@ class StudentProvider extends Component {
         confirmButtonText: "Delete",
       }).then((result) => {
         if (result.value) {
-          ipcRenderer.send("students:delete", _id);
           const condition = navigator.onLine;
           if (condition) {
+            ipcRenderer.send("students:delete", _id);
             this.showAlert("student removed");
 
             Swal.fire({
@@ -464,6 +503,22 @@ class StudentProvider extends Component {
       });
     } catch (error) {}
   };
+
+  // filtering academic year and semester
+  filteringAcademicYearAndSemester = (academicYearAndSemester) => {
+    const { academicYearAndSemesters } = this.state;
+
+    let tempAcademicYearAndSemesters = [...academicYearAndSemesters];
+
+    const selectedAcademicYearAndSemester = tempAcademicYearAndSemesters.filter(
+      (item) =>
+        item.year === academicYearAndSemester.year &&
+        item.semester === academicYearAndSemester.semester
+    );
+
+    if (selectedAcademicYearAndSemester.length !== 0) return true;
+    else return false;
+  };
   // add academic year and semester
   addAcademicYearAndSemester = (academicYearAndSemester) => {
     if (
@@ -474,17 +529,43 @@ class StudentProvider extends Component {
       return false;
     }
 
-    ipcRenderer.send("academicYearAndSemesters:add", academicYearAndSemester);
-    const condition = navigator.onLine;
-    if (condition) {
-      this.showAlert("year & semster added");
-    } else {
+    if (this.filteringAcademicYearAndSemester(academicYearAndSemester)) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No internet connection!",
+        icon: "warning",
+        title: "Warning",
+        text: "Already added data",
       });
+    } else {
+      const condition = navigator.onLine;
+      if (condition) {
+        ipcRenderer.send(
+          "academicYearAndSemesters:add",
+          academicYearAndSemester
+        );
+        this.showAlert("year & semster added");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No internet connection!",
+        });
+      }
     }
+  };
+
+  // filtering programme
+  filteringProgramme = (programme) => {
+    const { programmes } = this.state;
+
+    let tempProgrammes = [...programmes];
+
+    const selectedProgram = tempProgrammes.filter(
+      (item) => item.programme.toLowerCase === programme.toLowerCase
+    );
+
+    if (selectedProgram.length !== 0) {
+      return true;
+    } else return false;
   };
 
   // add programme
@@ -494,18 +575,37 @@ class StudentProvider extends Component {
       return false;
     }
 
-    ipcRenderer.send("programmes:add", programme);
-
-    const condition = navigator.onLine;
-    if (condition) {
-      this.showAlert("program added");
-    } else {
+    if (this.filteringProgramme(programme.programme)) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No internet connection!",
+        icon: "warning",
+        title: "Warning",
+        text: "Already added data",
       });
+    } else {
+      const condition = navigator.onLine;
+      if (condition) {
+        ipcRenderer.send("programmes:add", programme);
+        this.showAlert("program added");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No internet connection!",
+        });
+      }
     }
+  };
+
+  // filtering group
+  filteringGroup = (group) => {
+    const { groups } = this.state;
+
+    let tempGroups = [...groups];
+
+    const selectedGroup = tempGroups.filter((item) => item.group === group);
+
+    if (selectedGroup.length !== 0) return true;
+    else return false;
   };
 
   // add group
@@ -515,18 +615,39 @@ class StudentProvider extends Component {
       return false;
     }
 
-    ipcRenderer.send("groups:add", group);
-
-    const condition = navigator.onLine;
-    if (condition) {
-      this.showAlert("group added");
-    } else {
+    if (this.filteringGroup(group.group)) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No internet connection!",
+        icon: "warning",
+        title: "Warning",
+        text: "Already added data",
       });
+    } else {
+      const condition = navigator.onLine;
+      if (condition) {
+        ipcRenderer.send("groups:add", group);
+        this.showAlert("group added");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No internet connection!",
+        });
+      }
     }
+  };
+
+  // filtering sub group
+  filteringSubGroup = (subGroup) => {
+    const { subGroups } = this.state;
+
+    let tempSubGroups = [...subGroups];
+
+    const selectedSubGroup = tempSubGroups.filter(
+      (item) => item.subGroup === subGroup
+    );
+
+    if (selectedSubGroup.length !== 0) return true;
+    else return false;
   };
 
   // add sub group
@@ -536,18 +657,38 @@ class StudentProvider extends Component {
       return false;
     }
 
-    ipcRenderer.send("subGroups:add", subGroup);
-
-    const condition = navigator.onLine;
-    if (condition) {
-      this.showAlert("sub group added");
-    } else {
+    if (this.filteringSubGroup(subGroup.subGroup)) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No internet connection!",
+        icon: "warning",
+        title: "Warning",
+        text: "Already added data",
       });
+    } else {
+      const condition = navigator.onLine;
+      if (condition) {
+        ipcRenderer.send("subGroups:add", subGroup);
+        this.showAlert("sub group added");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No internet connection!",
+        });
+      }
     }
+  };
+
+  // filtering tag
+  filteringTag = (tag) => {
+    const { tags } = this.state;
+
+    let tempTags = [...tags];
+
+    const selectedTag = tempTags.filter(
+      (item) => item.tag.toLowerCase === tag.toLowerCase
+    );
+    if (selectedTag.length !== 0) return true;
+    else return false;
   };
 
   // add tag
@@ -557,18 +698,43 @@ class StudentProvider extends Component {
       return false;
     }
 
-    ipcRenderer.send("tags:add", tag);
-
-    const condition = navigator.onLine;
-    if (condition) {
-      this.showAlert("tag added");
-    } else {
+    if (this.filteringTag(tag.tag)) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No internet connection!",
+        icon: "warning",
+        title: "Warning",
+        text: "Already added data",
       });
+    } else {
+      const condition = navigator.onLine;
+      if (condition) {
+        ipcRenderer.send("tags:add", tag);
+        this.showAlert("tag added");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No internet connection!",
+        });
+      }
     }
+  };
+
+  // filtering student
+  filteringStudent = (student) => {
+    const { students } = this.state;
+
+    let tempStudents = [...students];
+
+    const selectedStudent = tempStudents.filter(
+      (item) =>
+        item.academicYearAndSemester === student.academicYearAndSemester &&
+        item.programme.toLowerCase === student.programme.toLowerCase &&
+        item.mainGroup === student.mainGroup &&
+        item.subGroup === student.subGroup
+    );
+
+    if (selectedStudent.length !== 0) return true;
+    else return false;
   };
 
   // add student
@@ -583,17 +749,24 @@ class StudentProvider extends Component {
       return false;
     }
 
-    ipcRenderer.send("students:add", student);
-
-    const condition = navigator.onLine;
-    if (condition) {
-      this.showAlert("student added");
-    } else {
+    if (this.filteringStudent(student)) {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No internet connection!",
+        icon: "warning",
+        title: "Warning",
+        text: "Already added data",
       });
+    } else {
+      const condition = navigator.onLine;
+      if (condition) {
+        ipcRenderer.send("students:add", student);
+        this.showAlert("student added");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No internet connection!",
+        });
+      }
     }
   };
 
